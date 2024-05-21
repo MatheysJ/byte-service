@@ -19,5 +19,5 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::get('/product', function (Request $request) {
-    return $request->user();
+    return $request->product();
 });
