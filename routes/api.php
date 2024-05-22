@@ -18,6 +18,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/product', function (Request $request) {
-    return $request->product();
-});
+Route::apiResource("product", "App\Http\Controllers\ProductController");
+Route::apiResource("product-category", "App\Http\Controllers\ProductCategoryController");
+

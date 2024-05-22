@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id)
+        return Product::findOrFail($id);
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $produtct->update($request->all());
+        $product->update($request->all());
     }
 
     /**

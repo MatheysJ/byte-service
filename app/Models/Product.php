@@ -9,6 +9,9 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = "product";
+    public $timestamps = false;
+
     protected $fillable = [
         "id_product",
         "category_id",
@@ -17,11 +20,8 @@ class Product extends Model
         "sale_price",
         "image",
         "description",
+        "active",
         "tag",
         "rank"
     ];
-
-    protected $hidden = [
-        "active"
-    ]
 }
