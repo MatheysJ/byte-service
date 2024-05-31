@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ProductHasOrder extends Model
+class ProductHasOrder extends Pivot
 {
-    use HasFactory;
+
+    
+    public $timestamps = false;
+    public $incrementing = true;
 
     protected $fillable = [
         "id_product_has_order",
@@ -15,4 +17,6 @@ class ProductHasOrder extends Model
         "id_order",
         "quantity"
     ];
+
+
 }

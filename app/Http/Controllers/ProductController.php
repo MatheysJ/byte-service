@@ -45,8 +45,13 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        return Product::findOrFail($id);
+    {   
+
+        $product = Product::with("category")->findOrFail($id);
+        unset($product->category_id);
+        /* $product->category = Product::find($product->category_id)->category; */
+
+        return $product;
     }
 
     /**

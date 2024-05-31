@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_category', function (Blueprint $table) {
-            $table->increments('id_product_category');
+            $table->increments('category_id');
             $table->string('name');
             $table->tinyInteger('internal');
             $table->tinyInteger('active');
@@ -33,7 +33,7 @@ return new class extends Migration
 
             $table->integer('category_id')->unsigned();
 
-            $table->foreign('category_id')->references('id_product_category')->on('product_category');
+            $table->foreign('category_id')->references('category_id')->on('product_category');
         });
     }
 
@@ -45,5 +45,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('product');
+        Schema::dropIfExists('product_category');
     }
 };

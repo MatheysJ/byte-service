@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::apiResource("product", "App\Http\Controllers\ProductController");
+Route::apiResource("product-category", "App\Http\Controllers\ProductCategoryController");
+Route::apiResource("payment-method", "App\Http\Controllers\PaymentMethodController");
+Route::apiResource("client", "App\Http\Controllers\ClientController");
+Route::apiResource("order", "App\Http\Controllers\OrderController");

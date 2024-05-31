@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Order;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Order::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
+        Order::create($request->all());
     }
 
     /**
@@ -46,7 +46,19 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id);
+        $order = Order::with("client", "paymentMethod", "products")->findOrFail($id);
+
+        foreach ($order->products as $product) {
+            echo $product;
+            echo $product->pivot;
+            /* $product->pivot represents the intermediate table */
+        }
+
+        unset($order->id_payment_method);
+        unset($order->id_client);
+
+
+        return $order;
     }
 
     /**
@@ -69,7 +81,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $order = Order::findOrFail($id);
         $produtct->update($request->all());
     }
 
@@ -81,7 +93,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
     }
 }

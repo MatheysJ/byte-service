@@ -8,4 +8,4 @@ php artisan serve
 
 podman pull docker.io/library/mysql
 
-podman run -dt -e MYSQL_ALLOW_EMPTY_PASSWORD=true -e MYSQL_DATABASE=laravel --name laravel -p 3306:3306 mysql:latest
+podman run -dt -e MYSQL_ROOT_PASSWORD=<MYSQL_ROOT_PASSWORD> -e MYSQL_USER=<MYSQL_USER> -e MYSQL_PASSWORD=<MYSQL_PASSWORD> -e MYSQL_DATABASE=byte --name byte-service -p 3306:3306 mysql:latest
