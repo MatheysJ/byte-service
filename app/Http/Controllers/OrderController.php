@@ -35,7 +35,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        Order::create($request->all());
+        $order = Order::create($request->all());
+
+        $order->products()->attach($request->products);
     }
 
     /**
@@ -47,12 +49,6 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with("client", "paymentMethod", "products")->findOrFail($id);
-
-        foreach ($order->products as $product) {
-            echo $product;
-            echo $product->pivot;
-            /* $product->pivot represents the intermediate table */
-        }
 
         unset($order->id_payment_method);
         unset($order->id_client);
