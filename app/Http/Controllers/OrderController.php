@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Order;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Order::all();
     }
 
     /**
@@ -35,7 +35,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
+        $order = Order::create($request->all());
+
+        $order->products()->attach($request->products);
+    }
+
+    private function format_show_response($order): Order
+    {
+        unset($order->id_payment_method);
+        unset($order->id_client);
+
+        $calculated_total = 0.0;
+        $calculated_sale_total = 0.0;
+
+        foreach($order->products as $product) {
+            $calculated_total = $calculated_total + $product->pivot->quantity * $product->price;
+            $calculated_sale_total = $calculated_sale_total + $product->pivot->quantity * $product->sale_price;
+            $product->quantity = $product->pivot->quantity;
+            unset($product->pivot);
+        }
+
+        $order->total = $calculated_total;
+        $order->sale_total = $calculated_sale_total;
+
+        return $order;
     }
 
     /**
@@ -46,7 +69,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id)
+        $order = Order::with("client", "paymentMethod", "products")->findOrFail($id);
+
+        return $this->format_show_response($order);
     }
 
     /**
@@ -69,8 +94,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-        $produtct->update($request->all());
+        $order = Order::findOrFail($id);
+        $order->update($request->all());
     }
 
     /**
@@ -81,7 +106,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
     }
 }

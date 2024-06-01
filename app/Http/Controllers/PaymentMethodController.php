@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\PaymentMethod;
 
-class ClientController extends Controller
+class PaymentMethodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return Client::all();
+        return PaymentMethod::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        Client::create($request->all());
+        PaymentMethod::create($request->all());
     }
 
     /**
@@ -46,7 +46,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return Client::findOrFail($id)
+        return PaymentMethod::with("orders")->findOrFail($id);
     }
 
     /**
@@ -69,8 +69,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Client::findOrFail($id);
-        $produtct->update($request->all());
+        $paymentMethod = PaymentMethod::findOrFail($id);
+        $paymentMethod->update($request->all());
     }
 
     /**
@@ -81,7 +81,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $product = Client::findOrFail($id);
-        $product->delete();
+        $paymentMethod = PaymentMethod::findOrFail($id);
+        $paymentMethod->delete();
     }
 }
