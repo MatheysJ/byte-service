@@ -40,6 +40,27 @@ class OrderController extends Controller
         $order->products()->attach($request->products);
     }
 
+    private function format_show_response($order): Order
+    {
+        unset($order->id_payment_method);
+        unset($order->id_client);
+
+        $calculated_total = 0.0;
+        $calculated_sale_total = 0.0;
+
+        foreach($order->products as $product) {
+            $calculated_total = $calculated_total + $product->pivot->quantity * $product->price;
+            $calculated_sale_total = $calculated_sale_total + $product->pivot->quantity * $product->sale_price;
+            $product->quantity = $product->pivot->quantity;
+            unset($product->pivot);
+        }
+
+        $order->total = $calculated_total;
+        $order->sale_total = $calculated_sale_total;
+
+        return $order;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -50,11 +71,7 @@ class OrderController extends Controller
     {
         $order = Order::with("client", "paymentMethod", "products")->findOrFail($id);
 
-        unset($order->id_payment_method);
-        unset($order->id_client);
-
-
-        return $order;
+        return $this->format_show_response($order);
     }
 
     /**
@@ -78,7 +95,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        $produtct->update($request->all());
+        $order->update($request->all());
     }
 
     /**
