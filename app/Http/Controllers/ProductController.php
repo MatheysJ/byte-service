@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -12,8 +13,23 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->filled('category_id')) {
+            $input = $request->input('category_id');
+            return Product::where('category_id', $input)
+                        ->orderBy('rank', 'desc')
+                        ->orderBy('name', 'asc')
+                        ->get();
+        }
+
+        if ($request->filled('name')) {
+            $input = $request->input('name');
+            return Product::where('name', 'like', $input."%")
+                        ->orderBy('name', 'asc')
+                        ->get();
+        }
+        
         return Product::all();
     }
 
