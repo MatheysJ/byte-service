@@ -30,7 +30,7 @@ class ProductController extends Controller
                         ->get();
         }
         
-        return Product::all();
+        return Product::orderBy('rank', 'desc')->get();
     }
 
     /**
