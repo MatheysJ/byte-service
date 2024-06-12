@@ -16,9 +16,12 @@ class Order extends Model
     use HasFactory;
 
     protected $table = "order";
+
     public $timestamps = false;
 
     protected $primaryKey = 'id';
+
+    protected $hidden = ["id_payment_method", "id_client"];
 
     protected $fillable = [
         "id",
