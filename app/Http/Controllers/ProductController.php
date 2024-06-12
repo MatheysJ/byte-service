@@ -46,12 +46,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {   
-
-        $product = Product::with("category")->findOrFail($id);
-        unset($product->category_id);
-        /* $product->category = Product::find($product->category_id)->category; */
-
-        return $product;
+        return Product::with("category")->findOrFail($id);
     }
 
     /**

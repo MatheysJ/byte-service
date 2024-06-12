@@ -14,12 +14,15 @@ class Product extends Model
     use HasFactory;
 
     protected $table = "product";
+
     public $timestamps = false;
+
     protected $primaryKey = 'id_product';
+
+    protected $hidden = ["category_id", "pivot"];
 
     public function category(): BelongsTo
     {
-        /* return $this->hasOne(ProductCategory::class, 'category_id'); */
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 

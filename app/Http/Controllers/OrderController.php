@@ -42,21 +42,15 @@ class OrderController extends Controller
 
     private function format_show_response($order): Order
     {
-        unset($order->id_payment_method);
-        unset($order->id_client);
-
         $calculated_total = 0.0;
         $calculated_sale_total = 0.0;
 
         foreach($order->products as $product) {
             $calculated_total = $calculated_total + $product->pivot->quantity * $product->price;
-            $calculated_sale_total = $calculated_sale_total + $product->pivot->quantity * $product->sale_price;
             $product->quantity = $product->pivot->quantity;
-            unset($product->pivot);
         }
 
         $order->total = $calculated_total;
-        $order->sale_total = $calculated_sale_total;
 
         return $order;
     }
