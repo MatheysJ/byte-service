@@ -20,8 +20,13 @@ return new class extends Migration
             $table->integer('id_product')->unsigned();
             $table->integer('id_order')->unsigned();
 
-            $table->foreign('id_product')->references('id_product')->on('product');
-            $table->foreign('id_order')->references('id')->on('order');
+            $table->foreign('id_product')->references('id_product')
+                ->on('product')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('id_order')->references('id')
+                ->on('order');
         });
     }
 

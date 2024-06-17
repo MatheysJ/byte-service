@@ -10,6 +10,8 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 
+use App\Http\Controllers\GraphController;
+
 Route::get("product", [ProductController::class, 'index']);
 Route::get("product/{id}", [ProductController::class, 'show']);
     
@@ -47,6 +49,10 @@ Route::group([ "middleware" => "auth:sanctum" ], function () {
     Route::post("order", [OrderController::class, 'store']);
     Route::put("order/{id}", [OrderController::class, 'update']);
     Route::delete("order/{id}", [OrderController::class, 'destroy']);
+
+    Route::get("graph/top-selling/product", [GraphController::class, 'topSellingProduct']);
+    Route::get("graph/top-selling/payment-method", [GraphController::class, 'topSellingPaymentMethod']);
+    Route::get("graph/product/by/product-category", [GraphController::class, 'productByProductCategory']);
     
 });
 
