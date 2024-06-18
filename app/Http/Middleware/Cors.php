@@ -14,10 +14,11 @@ class Cors
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+          ->header('Access-Control-Allow-Origin', '*')
+          ->header('Access-Control-Allow-Methods', '*')
+          ->header('Access-Control-Allow-Headers',' Origin, Content-Type, Accept, Authorization, X-Request-With')
+          ->header('Access-Control-Allow-Credentials',' true');
     }
 }

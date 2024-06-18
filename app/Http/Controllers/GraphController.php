@@ -30,4 +30,10 @@ class GraphController extends Controller
             ->orderByDesc('quantity')
             ->get();
     }
+
+    public function revenueByProduct (Request $request) 
+    {
+        return Product::withSum('orders', 'price') 
+            ->get();
+    }
 }

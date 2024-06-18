@@ -19,7 +19,7 @@ class Product extends Model
 
     protected $primaryKey = 'id_product';
 
-    protected $hidden = ["category_id", "pivot"];
+    protected $hidden = ["pivot"];
 
     public function category(): BelongsTo
     {

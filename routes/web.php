@@ -53,6 +53,7 @@ Route::group([ "middleware" => "auth:sanctum" ], function () {
     Route::get("graph/top-selling/product", [GraphController::class, 'topSellingProduct']);
     Route::get("graph/top-selling/payment-method", [GraphController::class, 'topSellingPaymentMethod']);
     Route::get("graph/product/by/product-category", [GraphController::class, 'productByProductCategory']);
+    Route::get("graph/revenue/by/product", [GraphController::class, 'revenueByProduct']);
     
 });
 
