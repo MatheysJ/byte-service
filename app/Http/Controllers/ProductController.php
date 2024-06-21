@@ -15,19 +15,23 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->filled('category_id')) {
-            $input = $request->input('category_id');
-            return Product::where('category_id', $input)
-                        ->orderBy('rank', 'desc')
-                        ->orderBy('name', 'asc')
-                        ->get();
-        }
 
-        if ($request->filled('name')) {
-            $input = $request->input('name');
-            return Product::where('name', 'like', $input."%")
-                        ->orderBy('name', 'asc')
-                        ->get();
+        $isSearch = $request->filled('search');
+        $search = $request->input('search');
+        $isCategory = $request->filled('category_id');
+        $category = $request->input('category_id');
+
+
+        if ($isSearch || $isCategory) {
+            return Product::where(function ($query) use ($isSearch, $search, $isCategory, $category) {
+                if ($isCategory) {
+                    $query->where('category_id', $category)->orderBy('rank', 'desc')->orderBy('name', 'asc');
+                }
+                if ($isSearch) {
+                    $query->where('id_product', $search)->orWhere('name', 'like', "%".$search."%");
+                }
+                return $query;
+            })->get();            
         }
         
         return Product::orderBy('rank', 'desc')->get();

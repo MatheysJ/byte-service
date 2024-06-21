@@ -12,9 +12,31 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Order::all();
+        $isSearch = $request->filled('search');
+        $isStatus = $request->filled('status');
+
+        if ($isSearch || $isStatus) {
+            $status = $request->input('status');
+            $search = $request->input('search');
+
+            $order = Order::where(
+                function ($query) use ($isSearch, $isStatus, $search, $status) {
+                    if ($isStatus) {
+                        $query->where('status', $status);
+                    }
+                    if ($isSearch) {
+                        $query->where('id', $search)->orWhere('address', 'like', "%".$search."%");
+                    }
+                    return $query;
+                }
+            );
+            
+            return $order->orderBy('id', 'desc')->get();
+        }
+        
+        return Order::orderBy('id', 'desc')->get();
     }
 
     /**

@@ -26,6 +26,7 @@ Route::get("client/{id}", [ClientController::class, 'show']);
 
 Route::get("order", [OrderController::class, 'index']);
 Route::get("order/{id}", [OrderController::class, 'show']);
+Route::post("order", [OrderController::class, 'store']);
 
 
 Route::group([ "middleware" => "auth:sanctum" ], function () {
@@ -46,7 +47,6 @@ Route::group([ "middleware" => "auth:sanctum" ], function () {
     Route::put("client/{id}", [ClientController::class, 'update']);
     Route::delete("client/{id}", [ClientController::class, 'destroy']);
 
-    Route::post("order", [OrderController::class, 'store']);
     Route::put("order/{id}", [OrderController::class, 'update']);
     Route::delete("order/{id}", [OrderController::class, 'destroy']);
 
