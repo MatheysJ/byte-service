@@ -23,6 +23,7 @@ Route::get("payment-method/{id}", [PaymentMethodController::class, 'show']);
 
 Route::get("client", [ClientController::class, 'index']);
 Route::get("client/{id}", [ClientController::class, 'show']);
+Route::post("client", [ClientController::class, 'store']);
 
 Route::get("order", [OrderController::class, 'index']);
 Route::get("order/{id}", [OrderController::class, 'show']);
@@ -42,8 +43,7 @@ Route::group([ "middleware" => "auth:sanctum" ], function () {
     Route::post("payment-method", [PaymentMethodController::class, 'store']);
     Route::put("payment-method/{id}", [PaymentMethodController::class, 'update']);
     Route::delete("payment-method/{id}", [PaymentMethodController::class, 'destroy']);
-    
-    Route::post("client", [ClientController::class, 'store']);
+
     Route::put("client/{id}", [ClientController::class, 'update']);
     Route::delete("client/{id}", [ClientController::class, 'destroy']);
 
