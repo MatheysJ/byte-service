@@ -12,8 +12,15 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $isSearch = $request->filled('search');
+        $search = $search = $request->input('search');
+
+        if ($isSearch) {
+            return ProductCategory::where("name", "like", "%".$search."%")->get();
+        }
+
         return ProductCategory::all();
     }
 

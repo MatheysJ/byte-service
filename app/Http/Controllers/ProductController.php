@@ -28,7 +28,7 @@ class ProductController extends Controller
                     $query->where('category_id', $category)->orderBy('rank', 'desc')->orderBy('name', 'asc');
                 }
                 if ($isSearch) {
-                    $query->where('id_product', $search)->orWhere('name', 'like', "%".$search."%");
+                    $query->where('name', 'like', "%".$search."%");
                 }
                 return $query;
             })->get();            
