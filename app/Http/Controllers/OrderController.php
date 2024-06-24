@@ -60,6 +60,9 @@ class OrderController extends Controller
         $order = Order::create($request->all());
 
         $order->products()->attach($request->products);
+
+        $data = ["id" => $order->id];
+        return json_encode($data);
     }
 
     private function format_show_response($order): Order

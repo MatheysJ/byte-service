@@ -43,9 +43,8 @@ class Product extends Model
         "price",
         "sale_price",
         "image",
-        "description",
-        "active",
-        "tag",
-        "rank"
+        "description",        
+        "rank",
+        "detailed_image"
     ];
 }
